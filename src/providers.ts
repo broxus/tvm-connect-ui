@@ -1,5 +1,5 @@
 import { paramsSerializer } from '@broxus/js-utils'
-import { EverWallet, SparXWallet, TvmWalletProviderConfig, VenomWallet } from "@broxus/tvm-connect";
+import { EverWallet, SparXWallet, TvmWalletProviderConfig, VenomWallet } from "@broxus/tvm-connect/lib";
 
 import EverWalletSvg from './icons/EverWallet.svg'
 import SparXWalletSvg from './icons/SparXWallet.svg'

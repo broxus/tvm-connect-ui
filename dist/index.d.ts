@@ -1,6 +1,6 @@
 import { nothing } from 'lit-html';
 import { type AddNetwork, type Network, type Permissions, ProviderRpcClient } from 'everscale-inpage-provider';
-import { type TvmWalletProviderConfig, TvmWalletService } from "@broxus/tvm-connect";
+import { type TvmWalletProviderConfig, TvmWalletService } from "@broxus/tvm-connect/lib";
 export * from './networks';
 export * from './providers';
 export * from './connections';
