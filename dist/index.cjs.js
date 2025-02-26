@@ -40,13 +40,13 @@ var import_lit_html = require("lit-html");
 var import_if_defined = require("lit-html/directives/if-defined.js");
 var import_class_map = require("lit-html/directives/class-map.js");
 var import_everscale_inpage_provider = require("everscale-inpage-provider");
-var import_lib2 = require("@broxus/tvm-connect/lib");
+var import_tvm_connect2 = require("@broxus/tvm-connect");
 var import_mobx = require("mobx");
 var import_js_utils2 = require("@broxus/js-utils");
 
 // src/providers.ts
 var import_js_utils = require("@broxus/js-utils");
-var import_lib = require("@broxus/tvm-connect/lib");
+var import_tvm_connect = require("@broxus/tvm-connect");
 
 // src/icons/EverWallet.svg
 var EverWallet_default = 'data:image/svg+xml,<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">%0A    <path d="M1200 600C1200 268.629 931.371 0 600 0C268.629 0 0 268.629 0 600C0 931.371 268.629 1200 600 1200C931.371 1200 1200 931.371 1200 600Z" fill="%23050B2E"/>%0A    <path d="M459.298 300L187.5 574.793H629.323V1012.5L900 741.632V300H459.298Z" fill="%23C5E4F3"/>%0A</svg>%0A';
@@ -59,7 +59,7 @@ var VenomWallet_default = 'data:image/svg+xml,<svg width="1200" height="1200" vi
 
 // src/providers.ts
 var sparxWallet = () => ({
-  connector: new import_lib.SparXWallet(),
+  connector: new import_tvm_connect.SparXWallet(),
   id: "SparXWallet",
   info: {
     description: "Your universal tool for TVM",
@@ -79,7 +79,7 @@ var sparxWallet = () => ({
   }
 });
 var everWallet = () => ({
-  connector: new import_lib.EverWallet(),
+  connector: new import_tvm_connect.EverWallet(),
   id: "EverWallet",
   info: {
     description: "Premier wallet for the Everscale",
@@ -95,7 +95,7 @@ var everWallet = () => ({
   }
 });
 var venomWallet = () => ({
-  connector: new import_lib.VenomWallet(),
+  connector: new import_tvm_connect.VenomWallet(),
   id: "VenomWallet",
   info: {
     description: "Safe, reliable, and 100% yours",
@@ -247,9 +247,9 @@ var TvmConnectUI = class {
     this.root = document.createElement("div");
     this.root.classList.add("tvm-connect-ui-root");
     document.body.append(this.root);
-    const meta = (0, import_lib2.getRecentConnectionMeta)();
+    const meta = (0, import_tvm_connect2.getRecentConnectionMeta)();
     const providers = params.providers && params.providers.length > 0 ? params.providers : [sparxWallet()];
-    this.tvmWallet = new import_lib2.TvmWalletService({
+    this.tvmWallet = new import_tvm_connect2.TvmWalletService({
       autoInit: true,
       providers,
       providerId: providers.length === 1 ? providers[0].id : meta?.providerId
@@ -288,8 +288,8 @@ var TvmConnectUI = class {
     const isInitializing = this.isInitializing[provider.id];
     const homepage = provider.info.links?.homepage;
     const universalLink = provider.info.links?.universalLink;
-    const [_, uri] = (0, import_lib2.getTvmProviderPlatformLink)({ ...provider.info.links }) ?? [];
-    const meta = (0, import_lib2.getRecentConnectionMeta)();
+    const [_, uri] = (0, import_tvm_connect2.getTvmProviderPlatformLink)({ ...provider.info.links }) ?? [];
+    const meta = (0, import_tvm_connect2.getRecentConnectionMeta)();
     return import_lit_html.html` ${!hasProvider && isInitializing ? import_lit_html.html`<button class=${(0, import_class_map.classMap)({
       "tvm-connect-ui-item": true,
       "tvm-connect-ui-item-disabled": true
@@ -306,7 +306,7 @@ var TvmConnectUI = class {
     return import_lit_html.html`<button tabIndex="0" class="tvm-connect-ui-back" @click=${this.resetselectedProvider} ><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="m289.18-445.54 214.05 213.8q9.85 10.15 10.23 24.19.39 14.04-9.43 24.41-10.49 10.73-24.7 10.66-14.2-.06-24.02-10.55L186.87-451.47q-6.23-5.56-9-12.54-2.77-6.98-2.77-15.69 0-8.04 2.77-14.99 2.77-6.95 9-12.51l269.77-269.77q10.23-10.23 24.18-10.43 13.95-.19 24.54 10.43 9.82 10.59 9.82 24.34 0 13.76-9.82 23.32L289.18-513.13h478.69q13.87 0 23.66 9.8 9.8 9.8 9.8 23.67 0 14.53-9.8 24.33-9.79 9.79-23.66 9.79H289.18Z"/></svg></button><div class="tvm-connect-ui-provider"><div class="tvm-connect-ui-provider-info">${this.selectedProvider.info.icon ? import_lit_html.html`<img class="tvm-connect-ui-provider-icon" src=${this.selectedProvider.info.icon} alt="" />` : null} ${this.selectedProvider.info.description ? import_lit_html.html`<div class="tvm-connect-ui-provider-desc">${this.selectedProvider.info.description}</div>` : null}</div>${this.providerId === this.selectedProvider.id ? import_lit_html.html`<div class="tvm-connect-ui-provider-status"><div class="tvm-connect-ui-provider-hint">${this.selectedProvider.info.name} is connected </div><button class="tvm-connect-ui-provider-btn" @click=${disconnect}> Disconnect </button></div>` : this.selectedProviderError ? import_lit_html.html`<div class="tvm-connect-ui-provider-status"><div class="tvm-connect-ui-provider-error"> Connection failed </div><div class="tvm-connect-ui-provider-text"> The request was rejected, please try again </div><button class="tvm-connect-ui-provider-btn" @click=${this.selectProvider.bind(this, this.selectedProvider.id)}> Try again </button></div>` : import_lit_html.html`<div class="tvm-connect-ui-provider-status"><div class="tvm-connect-ui-provider-hint"> Continue in ${this.selectedProvider.info.name}</div><div class="tvm-connect-ui-provider-text"> Accept connection request in the wallet </div></div>`}</div>`;
   };
   rootTemplate = () => {
-    const meta = (0, import_lib2.getRecentConnectionMeta)();
+    const meta = (0, import_tvm_connect2.getRecentConnectionMeta)();
     return import_lit_html.html`<div class="tvm-connect-ui-overlay" @click=${this.hide}></div><div class="tvm-connect-ui-popup"><button class="tvm-connect-ui-close" tabIndex="0" @click=${this.hide}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-437.85 277.08-234.92q-8.31 8.3-20.89 8.5-12.57.19-21.27-8.5-8.69-8.7-8.69-21.08 0-12.38 8.69-21.08L437.85-480 234.92-682.92q-8.3-8.31-8.5-20.89-.19-12.57 8.5-21.27 8.7-8.69 21.08-8.69 12.38 0 21.08 8.69L480-522.15l202.92-202.93q8.31-8.3 20.89-8.5 12.57-.19 21.27 8.5 8.69 8.7 8.69 21.08 0 12.38-8.69 21.08L522.15-480l202.93 202.92q8.3 8.31 8.5 20.89.19 12.57-8.5 21.27-8.7 8.69-21.08 8.69-12.38 0-21.08-8.69L480-437.85Z"/></svg></button><div class="tvm-connect-ui-title">Connect a wallet</div>${this.selectedProvider ? this.providerTemplate() : import_lit_html.html`<div class="tvm-connect-ui-list">${Array.from(this.tvmWallet.providers).sort((a, b) => a.id === meta?.providerId ? -1 : b.id === meta?.providerId ? 1 : 0).map((provider) => this.itemTemplate(provider))}</div>`}</div>`;
   };
   tvmWallet;
@@ -339,7 +339,7 @@ var TvmConnectUI = class {
       if (this.tvmWallet.providerId && providerId !== this.tvmWallet.providerId) {
         await prevConnector?.disconnect(true);
       }
-      (0, import_lib2.storeRecentConnectionMeta)({
+      (0, import_tvm_connect2.storeRecentConnectionMeta)({
         providerId,
         type: provider.connector.type
       });

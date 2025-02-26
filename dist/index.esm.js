@@ -3,13 +3,13 @@ import { html, nothing, render } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { classMap } from "lit-html/directives/class-map.js";
 import { ProviderRpcClient } from "everscale-inpage-provider";
-import { getRecentConnectionMeta, getTvmProviderPlatformLink, storeRecentConnectionMeta, TvmWalletService } from "@broxus/tvm-connect/lib";
+import { getRecentConnectionMeta, getTvmProviderPlatformLink, storeRecentConnectionMeta, TvmWalletService } from "@broxus/tvm-connect";
 import { autorun, makeAutoObservable, reaction, runInAction } from "mobx";
 import { getUserAgent, isMobile } from "@broxus/js-utils";
 
 // src/providers.ts
 import { paramsSerializer } from "@broxus/js-utils";
-import { EverWallet, SparXWallet, VenomWallet } from "@broxus/tvm-connect/lib";
+import { EverWallet, SparXWallet, VenomWallet } from "@broxus/tvm-connect";
 
 // src/icons/EverWallet.svg
 var EverWallet_default = 'data:image/svg+xml,<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">%0A    <path d="M1200 600C1200 268.629 931.371 0 600 0C268.629 0 0 268.629 0 600C0 931.371 268.629 1200 600 1200C931.371 1200 1200 931.371 1200 600Z" fill="%23050B2E"/>%0A    <path d="M459.298 300L187.5 574.793H629.323V1012.5L900 741.632V300H459.298Z" fill="%23C5E4F3"/>%0A</svg>%0A';
