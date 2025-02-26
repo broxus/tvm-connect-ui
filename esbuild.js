@@ -40,12 +40,16 @@ Promise.all([
         outfile: 'dist/index.esm.js',
     })
         .then(result => {
-            fs.writeFileSync('./dist/metafile.json', JSON.stringify(result.metafile, null, 2));
+            fs.writeFileSync('./buildmeta.json', JSON.stringify(result.metafile, null, 2));
+            fs.unlinkSync('./dist/index.esm.css')
         }),
     esbuild.build({
         ...baseTsConfig,
         format: 'cjs',
         outfile: 'dist/index.cjs.js',
-    }),
+    })
+        .then(result => {
+            fs.unlinkSync('./dist/index.cjs.css')
+        }),
 ])
     .catch(() => process.exit(1));
