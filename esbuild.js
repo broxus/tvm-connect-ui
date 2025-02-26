@@ -1,3 +1,4 @@
+const fs = require('fs')
 const esbuild = require('esbuild');
 const { nodeExternalsPlugin } = require('esbuild-node-externals');
 const { sassPlugin } = require('esbuild-sass-plugin');
@@ -6,10 +7,15 @@ const { minifyTemplates, writeFiles } = require('esbuild-minify-templates');
 const baseTsConfig = {
     entryPoints: ['./src/index.ts'],
     bundle: true,
+    minify: true,
     treeShaking: true,
     write: false,
+    metafile: true,
+    external: ['react'],
     plugins: [
-        nodeExternalsPlugin(),
+        nodeExternalsPlugin({
+            allowList: ['@broxus/tvm-connect']
+        }),
         sassPlugin(),
         minifyTemplates(),
         writeFiles()
@@ -32,7 +38,10 @@ Promise.all([
         ...baseTsConfig,
         format: 'esm',
         outfile: 'dist/index.esm.js',
-    }),
+    })
+        .then(result => {
+            fs.writeFileSync('./dist/metafile.json', JSON.stringify(result.metafile, null, 2));
+        }),
     esbuild.build({
         ...baseTsConfig,
         format: 'cjs',
