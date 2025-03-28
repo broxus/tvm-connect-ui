@@ -34652,7 +34652,7 @@
       "format": "esm"
     },
     "src/networks.ts": {
-      "bytes": 2188,
+      "bytes": 2194,
       "imports": [
         {
           "path": "everscale-inpage-provider",
@@ -34663,7 +34663,7 @@
       "format": "esm"
     },
     "src/connections.ts": {
-      "bytes": 867,
+      "bytes": 877,
       "imports": [
         {
           "path": "everscale-standalone-client",
@@ -34674,7 +34674,7 @@
       "format": "esm"
     },
     "src/index.ts": {
-      "bytes": 18794,
+      "bytes": 21113,
       "imports": [
         {
           "path": "lit-html",
@@ -34909,7 +34909,7 @@
       "cssBundle": "dist/index.esm.css",
       "inputs": {
         "src/index.ts": {
-          "bytesInOutput": 12658
+          "bytesInOutput": 13206
         },
         "node_modules/@broxus/js-core/dist/esm/AbstractStore.js": {
           "bytesInOutput": 1447
@@ -34962,6 +34962,15 @@
         "node_modules/@broxus/tvm-connect/lib/esm/utils/get-tvm-provider-platform-link.js": {
           "bytesInOutput": 351
         },
+        "node_modules/@broxus/tvm-connect/lib/esm/utils/is-ever-wallet-browser.js": {
+          "bytesInOutput": 63
+        },
+        "node_modules/@broxus/tvm-connect/lib/esm/utils/is-sparx-wallet-browser.js": {
+          "bytesInOutput": 65
+        },
+        "node_modules/@broxus/tvm-connect/lib/esm/utils/is-venom-wallet-browser.js": {
+          "bytesInOutput": 65
+        },
         "node_modules/@broxus/tvm-connect/lib/esm/services/TvmWalletService.js": {
           "bytesInOutput": 9308
         },
@@ -34984,7 +34993,7 @@
           "bytesInOutput": 362
         }
       },
-      "bytes": 53794
+      "bytes": 54535
     },
     "dist/index.esm.css": {
       "imports": [
