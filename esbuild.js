@@ -13,9 +13,10 @@ const baseTsConfig = {
     metafile: true,
     external: ['react'],
     plugins: [
-        nodeExternalsPlugin({
-            allowList: ['@broxus/tvm-connect'],
-        }),
+        // nodeExternalsPlugin({
+        //     allowList: ['@broxus/tvm-connect'],
+        // }),
+        nodeExternalsPlugin(),
         sassPlugin(),
         minifyTemplates(),
         writeFiles(),
